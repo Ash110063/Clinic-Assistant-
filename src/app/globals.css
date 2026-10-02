@@ -1,0 +1,315 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ------------------------------------------------------------------
+   Palette taken from the ClearPath reference (clearpath-template.framer.website):
+   near-white linen ground, white cards, charcoal-slate ink, soft sage green
+   for actions, deep slate from the footer for "done" states, and the warm
+   peach from its photography for highlights on dark surfaces.
+------------------------------------------------------------------- */
+:root {
+  --ink: #29333a;          /* charcoal slate · headings and dark cards */
+  --ink-soft: #5d6a6b;     /* muted grey-green · body copy */
+  --sage: #577e74;         /* primary actions (sage, deepened for white-text contrast) */
+  --sage-deep: #3d6159;    /* sage text on light surfaces */
+  --sage-soft: #9db9b1;    /* reference button sage · rings, bars, focus */
+  --stone: #beccc2;        /* pale grey-green · dots, dashed borders */
+  --mist: #e6eeea;         /* pale sage tint · chips, hovers */
+  --peach: #f2cfa6;        /* warm photo highlight · icons on dark cards */
+  --slate: #426870;        /* footer slate-teal · done / confirmed */
+  --slate-deep: #2f4f56;   /* slate text on light surfaces */
+  --slate-mist: #e2ebea;   /* pale slate tint */
+  --linen: #f7f8f6;        /* page ground */
+  --glass: rgba(255, 255, 255, 0.78);
+
+  /* Figma dashboard theme (Oct 2026) */
+  --mint: #97c9aa;         /* stat cards, main buttons, done badges */
+  --mint-light: #b3e9c1;   /* call-to-action gradient end */
+  --mint-glow: #a3daba;    /* feature card gradient end */
+  --sage-light: #7ca498;   /* icon tiles, progress start */
+  --slate-dark: #365259;   /* alert badges, text on mint */
+  --night: #2c3c4c;        /* emphasised title text, stat values */
+  --topbar: #f6f6f6;       /* doctor top bar */
+
+  --radius: 0.9rem;
+  --background: var(--linen);
+  --foreground: var(--ink);
+  --card: #ffffff;
+  --card-foreground: var(--ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--ink);
+  --primary: var(--sage);
+  --primary-foreground: #ffffff;
+  --secondary: #eaf1ee;
+  --secondary-foreground: var(--sage-deep);
+  --muted: #eff2f0;
+  --muted-foreground: var(--ink-soft);
+  --accent: var(--mist);
+  --accent-foreground: var(--sage-deep);
+  --destructive: var(--ink);
+  --border: #e3e8e5;
+  --input: #d5ddd9;
+  --ring: var(--sage-soft);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-sage: var(--sage);
+  --color-sage-deep: var(--sage-deep);
+  --color-sage-soft: var(--sage-soft);
+  --color-stone: var(--stone);
+  --color-mist: var(--mist);
+  --color-peach: var(--peach);
+  --color-slate: var(--slate);
+  --color-slate-deep: var(--slate-deep);
+  --color-slate-mist: var(--slate-mist);
+  --color-linen: var(--linen);
+  --color-mint: var(--mint);
+  --color-mint-light: var(--mint-light);
+  --color-mint-glow: var(--mint-glow);
+  --color-sage-light: var(--sage-light);
+  --color-slate-dark: var(--slate-dark);
+  --color-night: var(--night);
+  --color-topbar: var(--topbar);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: "Plus Jakarta Sans Variable", "Tajawal", system-ui, sans-serif;
+  --font-arabic: "Tajawal", "Noto Sans Arabic", "Plus Jakarta Sans Variable", sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01";
+  }
+}
+
+/* Soft sage and peach mist, like the reference's blurred photography */
+.app-ground {
+  background:
+    radial-gradient(900px 600px at 85% -10%, rgba(157, 185, 177, 0.32), transparent 60%),
+    radial-gradient(700px 500px at 0% 100%, rgba(242, 207, 166, 0.16), transparent 60%),
+    radial-gradient(600px 400px at 60% 110%, rgba(66, 104, 112, 0.1), transparent 60%),
+    linear-gradient(180deg, #fafbf9 0%, #f3f5f3 100%);
+}
+
+@layer components {
+.glass {
+  background: #ffffff;
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 10px 30px -14px rgba(54, 82, 89, 0.22),
+    0 2px 6px -2px rgba(41, 51, 58, 0.05);
+}
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, var(--sage) 0%, #4f7a72 50%, var(--slate) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-brand-gradient {
+  background: linear-gradient(135deg, #7ca498 0%, var(--sage) 55%, #365259 100%);
+}
+
+/* Deeper version taken from the reference footer, used behind white text */
+.bg-brand-deep {
+  background: linear-gradient(120deg, #2c3c4c 0%, #365259 55%, var(--sage) 100%);
+}
+
+/* The glowing "AI" orb: sage core with a slate edge and a warm peach halo */
+.orb {
+  background:
+    radial-gradient(circle at 50% 32%, rgba(255, 255, 255, 0.5), transparent 45%),
+    radial-gradient(circle at 50% 60%, #7ca498 0%, #4f766d 50%, #2c3c4c 100%);
+  box-shadow:
+    0 0 0 10px rgba(157, 185, 177, 0.28),
+    0 0 0 22px rgba(242, 207, 166, 0.16),
+    0 20px 50px -10px rgba(54, 82, 89, 0.55);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.pulse-ring {
+  animation: pulse-ring 1.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+@keyframes bar {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+.wave span {
+  display: inline-block;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--peach), var(--sage));
+  animation: bar 1s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring,
+  .wave span {
+    animation: none;
+  }
+}
+
+.arabic {
+  font-family: var(--font-arabic);
+}
+
+/* ------------------------------------------------------------------
+   Figma theme additions
+------------------------------------------------------------------- */
+
+/* Main call to action: peach → light mint (dashboard "Open brief") */
+.bg-cta {
+  background: linear-gradient(90deg, #f2cfa6 3%, var(--mint-light) 100%);
+}
+/* Tablet start button: peach → mint → sage (Welcome "Start") */
+.bg-cta-long {
+  background: linear-gradient(90deg, #f2cfa6 0%, var(--mint-light) 50%, var(--sage) 100%);
+}
+/* Feature card: sage → mint glow (dashboard "How it works") */
+.bg-feature {
+  background: linear-gradient(144deg, var(--sage) 0%, var(--mint-glow) 100%);
+}
+.bg-progress {
+  background: linear-gradient(90deg, var(--sage-light), var(--mint));
+}
+.shadow-cta {
+  box-shadow: 0 10px 12px -2px rgba(54, 82, 89, 0.33);
+}
+.shadow-soft-btn {
+  box-shadow: 0 10px 12px -4px rgba(54, 82, 89, 0.17);
+}
+
+/* Frosted glass on the gradient (Home chips 17%, steps panel 26%) */
+.glass-chip {
+  background: rgba(255, 255, 255, 0.17);
+  border: 1px solid #ffffff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px -14px rgba(54, 82, 89, 0.22), 0 2px 6px -2px rgba(41, 51, 58, 0.05);
+}
+.glass-panel {
+  background: rgba(255, 255, 255, 0.26);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ---- Animated mesh background (Figma Home "1" frame) ----
+   Deep sage base, five heavily blurred shapes drifting on a 12 s loop,
+   plus a 6 % film grain. Positions are % of the 1440 × 860 design frame. */
+.mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #5a7876;
+  z-index: 0;
+}
+.mesh__blob {
+  position: absolute;
+  border-radius: 45%;
+  filter: blur(140px);
+  will-change: transform;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+.mesh__blob--sand   { left: -6%; top: 32%; width: 42%; height: 76%; background: #ddceae; opacity: 0.87; animation-name: mesh-a; }
+.mesh__blob--aqua   { left: 10%; top: -10%; width: 95%; height: 99%; background: #9fd1d2; opacity: 0.7; animation-name: mesh-b; }
+.mesh__blob--teal   { left: 63%; top: 4%; width: 40%; height: 93%; background: #5b8381; border-radius: 50%; animation-name: mesh-c; }
+.mesh__blob--sand2  { left: 63%; top: -14%; width: 42%; height: 68%; background: #ddceae; opacity: 0.56; animation-name: mesh-d; }
+.mesh__blob--mint   { left: 65%; top: -1%; width: 27%; height: 90%; background: #a3daba; animation-name: mesh-e; }
+@keyframes mesh-a { 0%,100% { transform: translate(0,0); } 33% { transform: translate(-32px,-372px); } 67% { transform: translate(120px,-496px); } }
+@keyframes mesh-b { 0%,100% { transform: translate(0,0); } 33% { transform: translate(152px,-20px); } 67% { transform: translate(106px,-21px); } }
+@keyframes mesh-c { 0%,33%,100% { transform: translate(0,0); } 67% { transform: translate(-462px,225px); } }
+@keyframes mesh-d { 0%,100% { transform: translate(0,0); } 33% { transform: translate(-84px,240px); } 67% { transform: translate(88px,336px); } }
+@keyframes mesh-e { 0%,100% { transform: translate(0,0); } 33% { transform: translate(-410px,504px); } 67% { transform: translate(-684px,357px); } }
+.mesh--calm .mesh__blob { animation-duration: 24s; }
+.mesh__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Hero video circle (Figma "1002 1"); the placeholder mimics the silky sage/sand clip */
+.hero-video {
+  position: absolute;
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(41, 51, 58, 0.45);
+}
+.hero-video__placeholder {
+  position: absolute;
+  inset: -40%;
+  background:
+    radial-gradient(40% 30% at 55% 45%, #d9cdb0 0%, transparent 70%),
+    conic-gradient(from 20deg at 50% 50%, #6f8f7a, #b9b597, #d9cdb0, #7f9c86, #5f7f6c, #a6a98c, #6f8f7a);
+  filter: blur(18px);
+  animation: hero-swirl 14s linear infinite;
+}
+@keyframes hero-swirl { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .mesh__blob,
+  .hero-video__placeholder {
+    animation: none;
+  }
+}
+
+/* Tablet screens sit on the mesh: cards become frosted glass (Figma Welcome card) */
+@layer components {
+.kiosk .glass {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(22px) saturate(115%);
+  -webkit-backdrop-filter: blur(22px) saturate(115%);
+  box-shadow: 0 20px 50px -24px rgba(41, 51, 58, 0.35);
+}
+}
+.kiosk-title {
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(41, 51, 58, 0.18);
+}
